@@ -1,8 +1,7 @@
 const import_external = require("./import_external")
-const CLIEngine = import_external("eslint/lib/cli-engine")
+const { CLIEngine } = import_external("eslint/lib/cli-engine")
 const path = require("path")
 const fs = require("fs")
-const a = 1;
 
 function translateOptions(cliOptions) {
 	return {
