@@ -1,0 +1,14 @@
+{
+    "name": "eslint-th",
+    "main": "./index.js",
+    "bin": {
+        "eslint-th": "bin/eslint.js"
+    },
+    "dependencies": {
+        "chalk": "^4.1.0",
+        "optionator": "^0.9.1",
+        "resolve": "^1.19.0",
+        "text-table": "^0.2.0"
+    },
+    "devDependencies": {}
+}
