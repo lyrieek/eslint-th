@@ -2,7 +2,7 @@
 
 ## Necessary
 
-1. 7.+ more eslint library
+1. eslint 7.+ more library
 2. Environment variable: NODE_PATH
 
 ## Usage

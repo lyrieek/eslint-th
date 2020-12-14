@@ -1,5 +1,6 @@
 const import_external = require("./import_external")
 const { CLIEngine } = import_external("eslint/lib/cli-engine")
+const chalk = require("chalk")
 const path = require("path")
 const fs = require("fs")
 
@@ -41,11 +42,11 @@ module.exports = function(options) {
 			options.config = path.resolve(options.root, options.config)
 			if (!fs.existsSync(options.config) || !fs.lstatSync(options.config).isFile()) {
 				console.log(require("./options").generateHelp())
-				return null
+				return
 			}
 		} catch (error) {
 			console.error(error)
-			return null
+			return
 		}
 		if (!options.ignorePath) {
 			options.ignorePath = ".eslintignore"
@@ -53,6 +54,10 @@ module.exports = function(options) {
 		options.ignorePath = path.resolve(options.root, options.ignorePath)
 	} else if (!files || !files.length) {
 		files = ["*.js", "**/*.js"]
+	}
+	if (!options.config) {
+		console.log(chalk.green("\u2705Eslint-th ready!"))
+		return
 	}
 	const engine = new CLIEngine(translateOptions(options))
 	const report = engine.executeOnFiles(files)
