@@ -3,6 +3,7 @@ const { CLIEngine } = import_external("eslint/lib/cli-engine")
 const chalk = require("chalk")
 const path = require("path")
 const fs = require("fs")
+const _options = require("./options")
 
 function translateOptions(cliOptions) {
 	return {
@@ -29,6 +30,10 @@ function translateOptions(cliOptions) {
 
 module.exports = function(options) {
 	let files = options._
+	if (options.help) {
+		console.log(_options.generateHelp())
+		return
+	}
 	if (options.auto && options.root) {
 		if (!files || !files.length) {
 			files = [options.root + "/*.js", options.root + "/**/*.js"]
