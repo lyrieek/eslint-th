@@ -1,5 +1,10 @@
 # Eslint-th
 
+## Necessary
+
+1. 7.+ more eslint library
+2. Environment variable: NODE_PATH
+
 ## Usage
 
 ``` bash
@@ -23,7 +28,7 @@ Remove command
 - --fix-dry-run
 - --fix-type
 
-Plan
+## Plan
 
 - Increase inspection speed (very slow, too many to scan)
 - Remove the burden caused by fix function (bad function)
