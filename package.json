@@ -1,9 +1,9 @@
 {
     "name": "eslint-th",
     "version": "0.0.7",
-    "main": "./index.js",
+    "main": "bin/index.js",
     "bin": {
-        "eslint-th": "index.js"
+        "eslint-th": "bin/index.js"
     },
     "description": "Easier to use eslint",
     "license": "Apache-2.0",

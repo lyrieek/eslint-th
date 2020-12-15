@@ -15,27 +15,6 @@
             "modules": true
         }
     },
-    "globals":{
-        "$": true,
-        "jQuery": true,
-        "angular": true,
-        "kendo": true,
-        "_": true,
-        "moment": true,
-        "hotkeys": true,
-        "isDialog": true,
-        "translate": true,
-        "toastr": true,
-        "SockJS": true,
-        "Stomp": true,
-        "rootSDialog": true,
-        "currency": true,
-        "dialog": true,
-        "tabButtonValues": true,
-        "c_get": true,
-        "parseException": true,
-        "WeakMap": true
-    },
     "rules": {
         "no-cond-assign": 2,
         "no-constant-condition": 2,
@@ -197,6 +176,7 @@
                 "=": "after"
             }
         }],
+        "semi": [1, "never"],
         "padded-blocks": 0,
         "quote-props": 0,
         "semi-spacing": 0,
