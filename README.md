@@ -32,5 +32,6 @@ Remove command
 
 - Increase inspection speed (very slow, too many to scan)
 - Remove the burden caused by fix function (bad function)
+- Remove cache
 - Achieve true "-quite" (take up extra time)
 - Complete statistics (e.g. number of scanned files and time consuming)

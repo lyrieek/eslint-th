@@ -28,40 +28,47 @@ function translateOptions(cliOptions) {
 	}
 }
 
+function checkFileExists(dir, fileName, defaultFileName) {
+	try {
+		if (!fileName && defaultFileName) {
+			fileName = defaultFileName
+		}
+		if (fileName) {
+			fileName = path.resolve(dir, fileName)
+		} else {
+			fileName = dir
+		}
+		if (fs.existsSync(fileName) && fs.lstatSync(fileName).isFile()) {
+			return fileName
+		}
+	} catch (error) {
+		console.error(error)
+		return
+	}
+}
+
 module.exports = function(options) {
 	let files = options._
 	if (options.help) {
 		console.log(_options.generateHelp())
 		return
 	}
+	let rootPath = process.cwd();
 	if (options.auto && options.root) {
+		rootPath = options.root;
+		options.ignorePath = checkFileExists(rootPath, options.ignorePath, ".eslintignore")
 		if (!files || !files.length) {
 			files = [options.root + "/*.js", options.root + "/**/*.js"]
 		} else {
 			files = [options.root + files[0]]
 		}
-		if (!options.config) {
-			options.config = ".eslintrc"
-		}
-		try {
-			options.config = path.resolve(options.root, options.config)
-			if (!fs.existsSync(options.config) || !fs.lstatSync(options.config).isFile()) {
-				console.log(require("./options").generateHelp())
-				return
-			}
-		} catch (error) {
-			console.error(error)
-			return
-		}
-		if (!options.ignorePath) {
-			options.ignorePath = ".eslintignore"
-		}
-		options.ignorePath = path.resolve(options.root, options.ignorePath)
 	} else if (!files || !files.length) {
 		files = ["*.js", "**/*.js"]
 	}
+	options.config = checkFileExists(rootPath, options.config, ".eslintrc")
 	if (!options.config) {
-		console.log(chalk.green("\u2705Eslint-th ready!"))
+		// console.log(chalk.green("\u2705 Eslint-th ready!"))
+		console.log(require("./options").generateHelp())
 		return
 	}
 	const engine = new CLIEngine(translateOptions(options))
