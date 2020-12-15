@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const dispose = require("./dispose")
-const print = require("./print")
-const options = require("./options")
+const dispose = require("../lib/dispose")
+const print = require("../lib/print")
+const options = require("../lib/options")
 
 const start_hrtime = process.hrtime();
 const currentOptions = options.parse(process.argv)
