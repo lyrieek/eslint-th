@@ -41,7 +41,11 @@ module.exports = function(results, config) {
 		warningInfo = `, ${warningCount} warning`;
 	}
 	const endtime = process.hrtime(config.start_hrtime);
-	console.log(chalk.red.bold(`\u2718 There are ${total} problem (${errorCount} error${warningInfo})`))
+	if (total) {
+		console.log(chalk.red.bold(`\u2718 There are ${total} problem (${errorCount} error${warningInfo})`))
+	} else {
+		console.log(chalk.green("\u2705 Everything is correct!"))
+	}
 	console.log('Run-up time:\u23F0 ' + new Date(config.start_time).toTimeString())
 	console.log('Expend time:\u26A1 %ds %sms', endtime[0], (endtime[1] / 1000000).toFixed(2))
 	console.log(chalk.green.bold(`\u2728 Eslint-th done.`))

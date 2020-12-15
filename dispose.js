@@ -1,6 +1,4 @@
-const import_external = require("./import_external")
-const { CLIEngine } = import_external("eslint/lib/cli-engine")
-const chalk = require("chalk")
+const engine = require("./lib/engine")
 const path = require("path")
 const fs = require("fs")
 const _options = require("./options")
@@ -53,10 +51,12 @@ module.exports = function(options) {
 		console.log(_options.generateHelp())
 		return
 	}
-	let rootPath = process.cwd();
+	if (!options.cwd) {
+		options.cwd = process.cwd();
+	}
 	if (options.auto && options.root) {
-		rootPath = options.root;
-		options.ignorePath = checkFileExists(rootPath, options.ignorePath, ".eslintignore")
+		options.cwd = options.root;
+		options.ignorePath = checkFileExists(options.cwd, options.ignorePath, ".eslintignore")
 		if (!files || !files.length) {
 			files = [options.root + "/*.js", options.root + "/**/*.js"]
 		} else {
@@ -65,13 +65,27 @@ module.exports = function(options) {
 	} else if (!files || !files.length) {
 		files = ["*.js", "**/*.js"]
 	}
-	options.config = checkFileExists(rootPath, options.config, ".eslintrc")
+	options.config = checkFileExists(options.cwd, options.config, ".eslintrc")
 	if (!options.config) {
 		// console.log(chalk.green("\u2705 Eslint-th ready!"))
 		console.log(require("./options").generateHelp())
 		return
 	}
-	const engine = new CLIEngine(translateOptions(options))
-	const report = engine.executeOnFiles(files)
-	return options.all ? report.results : CLIEngine.getErrorResults(report.results)
+	const results = engine(translateOptions(options), files).results;
+	if (!options.all) {
+		const filtered = []
+		results.forEach(result => {
+			const filteredMessages = result.messages.filter((message) => message.severity === 2)
+			if (filteredMessages.length > 0) {
+				filtered.push({
+					...result,
+					messages: filteredMessages,
+					errorCount: filteredMessages.length,
+					warningCount: 0
+				})
+			}
+		})
+		return filtered
+	}
+	return results
 }
